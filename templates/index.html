@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        <h2>Welcome to</h2>
+        <h1>
+            PIEAS SPORTICS SOCIETY
+            {% if session.get("username") %}
+                {% if session.username == "LARAIB SHOAIB" %}
+                    <p class="text-red">Hello, {{ session.username }}! pookie dookie</p>
+                {% else %}
+                    <p class="text-red">{{ session.username }}</p>
+                {% endif %}
+            {% endif %}
+        </h1>
+        <p>Your hub for sports events and activities at PIEAS.</p>
+
+        {% if session.get("username") %}
+            {% if is_admin and session.get("user_id") in is_admin %}
+                <a href="/create_event" class="btn btn-custom">Create Event</a>
+                <a href="/delete_event" class="btn btn-danger">Delete Event</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <!-- President's Message Section -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="president-message-box d-flex align-items-center p-4">
+                    <img src="{{ url_for('static', filename='images/president.PNG') }}" alt="President Muhammad Tasdiq" class="president-image">
+                    <div class="message-content ml-4">
+                        <h2>President's Message</h2>
+                        <p><strong>MUHAMMAD TASDIQ</strong>, Batch 21-25</p>
+                        <p> Welcome to the PIEAS Sportics Society! </p>
+                        <p> As your president, I am thrilled to be a part of this vibrant community. Our goal is to promote sports and fitness among students and create an environment where everyone can thrive. I encourage you all to participate in our events and take full advantage of the opportunities we offer. Together, let's make this a memorable and exciting journey. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Objectives Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Objectives</h2>
+                <p>
+                    Our primary goal is to promote sports and fitness among the students of PIEAS by organizing a variety of events and activities. We aim to foster a sense of community, encourage teamwork, and provide opportunities for students to engage in sports that they are passionate about. Through these events, we hope to enhance the overall student experience and contribute to a healthier and more active campus life.
+                </p>
+            </div>
+        </div>
+
+        <!-- Events Section -->
+        <div class="row">
+            <div class="col-12">
+                <h2>Upcoming Events</h2>
+            </div>
+            {% for event in events %}
+                <div class="col-md-4 mb-4">
+                    <div class="card event-card">
+                        {% if event.image %}
+                            <img src="{{ url_for('static', filename='uploads/' ~ event.image) }}" class="card-img-top" alt="{{ event.name }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/default_event.jpg') }}" class="card-img-top" alt="Default Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.name }}</h5>
+                            <p class="card-text">{{ event.date }}</p>
+                            <a href="/event/{{ event.id }}" class="btn btn-custom">See Event Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Inline CSS for President's Message -->
+    <style>
+        /* President's Message Box Styling */
+        .president-message-box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin-top: 20px;
+        }
+
+        .president-image {
+            width: 120px;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        .message-content {
+            max-width: 600px;
+        }
+
+        .message-content h2 {
+            margin-bottom: 10px;
+        }
+
+        .message-content p {
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}

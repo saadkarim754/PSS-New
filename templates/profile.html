@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Profile</h1>
+
+    <!-- Profile Details Section -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>User Details</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user.phone_number }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select class="form-control" id="department" name="department" required>
+                        <option value="DCIS" {% if user.department == 'DCIS' %}selected{% endif %}>DCIS - Department of Computer and Information Sciences</option>
+                        <option value="DPhy" {% if user.department == 'DPhy' %}selected{% endif %}>DPhy - Department of Physics</option>
+                        <option value="DEE" {% if user.department == 'DEE' %}selected{% endif %}>DEE - Department of Electrical Engineering</option>
+                        <option value="DME" {% if user.department == 'DME' %}selected{% endif %}>DME - Department of Mechanical Engineering</option>
+                        <option value="DCHE" {% if user.department == 'DCHE' %}selected{% endif %}>DCHE - Department of Chemical Engineering</option>
+                        <option value="DMME" {% if user.department == 'DMME' %}selected{% endif %}>DMME - Department of Metallurgy and Materials Engineering</option>
+                        <option value="DChy" {% if user.department == 'DChy' %}selected{% endif %}>DChy - Department of Chemistry</option>
+                        <option value="DNE" {% if user.department == 'DNE' %}selected{% endif %}>DNE - Department of Nuclear Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <input type="text" class="form-control" id="semester" name="semester" value="{{ user.semester }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="university_registration_number">University Registration Number</label>
+                    <input type="text" class="form-control" id="university_registration_number" name="university_registration_number" value="{{ user.university_registration_number }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <input type="text" class="form-control" id="gender" name="gender" value="{{ user.gender }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+
+        <!-- Registered Events Section -->
+        <div class="col-md-6">
+            <h2>Registered Events</h2>
+            {% if events %}
+                <div class="list-group">
+                    {% for event in events %}
+                        <a href="/event/{{ event.id }}" class="list-group-item list-group-item-action">
+                            <h5 class="mb-1">{{ event.name }}</h5>
+                            <p class="mb-1"><strong>Sport:</strong> {{ event.sport_name }}</p>
+                            <small>{{ event.start_date }} - {{ event.end_date }}</small>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>You are not registered for any events.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

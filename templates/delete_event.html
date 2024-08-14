@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Delete Event{% endblock %}
+
+{% block content %}
+    <h2 class="text-center">Delete Event</h2>
+    <form action="/delete_event" method="post">
+        <div class="form-group">
+            <label for="event_id">Select Event:</label>
+            <select id="event_id" name="event_id" class="form-control" required>
+                <option value="" disabled selected>Select an event</option>
+                {% for event in events %}
+                    <option value="{{ event.id }}">{{ event.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-danger">Delete Event</button>
+    </form>
+{% endblock %}

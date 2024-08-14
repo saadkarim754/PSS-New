@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Register for Event{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Register for {{ event.name }}</h2>
+        <form action="" method="post">
+            <input type="hidden" name="event_id" value="{{ event.id }}">
+            <div class="form-group">
+                <label for="sports">Select Sports:</label>
+                <select id="sports" name="sports" class="form-control" multiple>
+                    {% for sport in sports %}
+                        <option value="{{ sport.id }}">{{ sport.name }}-{{sport.category}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+{% endblock %}

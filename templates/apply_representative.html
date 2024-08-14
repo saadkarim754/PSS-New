@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}Apply for Departmental Representative{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Apply for Departmental Representative</h1>
+    <form action="{{ url_for('apply_representative') }}" method="post">
+        <div class="form-group">
+            <label for="experience">Experience</label>
+            <textarea id="experience" name="experience" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="suggestions">Suggestions</label>
+            <textarea id="suggestions" name="suggestions" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Application</button>
+    </form>
+</div>
+{% endblock %}

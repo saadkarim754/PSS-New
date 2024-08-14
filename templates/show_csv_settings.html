@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Download CSV{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Download CSV</h2>
+
+<form method="post" action="{{ url_for('download_filtered_csv') }}">
+    <input type="hidden" name="event_id" value="{{ event_id }}">
+
+    <div class="form-group">
+        <label for="sport_id">Select Sport:</label>
+        <select id="sport_id" name="sport_id" class="form-control">
+            <option value="">All Sports</option>
+            {% for sport in sports %}
+                <option value="{{ sport.id }}">{{ sport.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="department">Select Department:</label>
+        <select id="department" name="department" class="form-control">
+            <option value="">All Departments</option>
+            <!-- Hardcoded departments -->
+            <option value="DCIS">Department of Computer and Information Sciences</option>
+            <option value="DPhy">Department of Physics</option>
+            <option value="DEE">Department of Electrical Engineering</option>
+            <option value="DME">Department of Mechanical Engineering</option>
+            <option value="DCHE">Department of Chemical Engineering</option>
+            <option value="DMME">Department of Metallurgy and Materials Engineering</option>
+            <option value="DChy">Department of Chemistry</option>
+            <option value="DNE">Department of Nuclear Engineering</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="gender">Select Gender:</label>
+        <select id="gender" name="gender" class="form-control">
+            <option value="">All Genders</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Download CSV</button>
+</form>
+{% endblock %}

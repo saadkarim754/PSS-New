@@ -1,0 +1,126 @@
+/* Link Bootstrap CSS in the HTML head section */
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+header {
+    background-color: #343a40;
+    padding: 10px 0;
+    font-size: 25px;
+    margin-bottom: 20px;
+   /* font-weight: bold; /* Make all text in the header bold */
+}
+
+header nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+header img {
+    height: 50px;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #343a40;
+}
+
+/* Button Styling */
+.btn-custom {
+    background-color: #dc3545; /* Primary color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Form Control Styling */
+.form-control {
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+/* Event Card Styling */
+.event-card {
+    margin-bottom: 20px;
+}
+
+.event-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.event-card-body {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #e9ecef;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.event-card-title {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.event-card-text {
+    color: #6c757d;
+}
+
+/* Additional Styles */
+.text-red {
+    color: red;
+}
+
+/* Container Styling */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Header Styling */
+.header {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Flexbox Layout */
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

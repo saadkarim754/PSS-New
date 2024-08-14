@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card p-5" style="max-width: 600px; width: 100%; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='images/sportics.jpg') }}" alt="Sportics Logo" class="mb-4" style="max-width: 100px;">
+                <h2 class="h4 mb-4">Create your account</h2>
+            </div>
+            <form action="/register" method="post">
+                <div class="form-group mb-3">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" value="{{ request.form.username or '' }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" value="{{ request.form.email or '' }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="gender">Gender</label>
+                    <select name="gender" id="gender" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="Male" {% if request.form.gender == 'Male' %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if request.form.gender == 'Female' %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if request.form.gender == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Enter your phone number" value="{{ request.form.phone_number or '' }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password (min 8 characters)" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="confirmation">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmation" name="confirmation" placeholder="Re-enter your password" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="department">Department</label>
+                    <select class="form-control" id="department" name="department" required>
+                        <option value="Select">Select...</option>
+                        <option value="DCIS" {% if request.form.department == 'DCIS' %}selected{% endif %}>Department of Computer and Information Sciences</option>
+                        <option value="DPhy" {% if request.form.department == 'DPhy' %}selected{% endif %}>Department of Physics</option>
+                        <option value="DEE" {% if request.form.department == 'DEE' %}selected{% endif %}>Department of Electrical Engineering</option>
+                        <option value="DME" {% if request.form.department == 'DME' %}selected{% endif %}>Department of Mechanical Engineering</option>
+                        <option value="DCHE" {% if request.form.department == 'DCHE' %}selected{% endif %}>Department of Chemical Engineering</option>
+                        <option value="DMME" {% if request.form.department == 'DMME' %}selected{% endif %}>Department of Metallurgy and Materials Engineering</option>
+                        <option value="DChy" {% if request.form.department == 'DChy' %}selected{% endif %}>Department of Chemistry</option>
+                        <option value="DNE" {% if request.form.department == 'DNE' %}selected{% endif %}>Department of Nuclear Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="semester">Semester</label>
+                    <select class="form-control" id="semester" name="semester" required>
+                        <option value="" disabled {% if not request.form.semester %}selected{% endif %}>Select...</option>
+                        <option value="1" {% if request.form.semester == '1' %}selected{% endif %}>1</option>
+                        <option value="2" {% if request.form.semester == '2' %}selected{% endif %}>2</option>
+                        <option value="3" {% if request.form.semester == '3' %}selected{% endif %}>3</option>
+                        <option value="4" {% if request.form.semester == '4' %}selected{% endif %}>4</option>
+                        <option value="5" {% if request.form.semester == '5' %}selected{% endif %}>5</option>
+                        <option value="6" {% if request.form.semester == '6' %}selected{% endif %}>6</option>
+                        <option value="7" {% if request.form.semester == '7' %}selected{% endif %}>7</option>
+                        <option value="8" {% if request.form.semester == '8' %}selected{% endif %}>8</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="university_registration_number">University Registration Number</label>
+                    <input type="text" class="form-control" id="university_registration_number" name="university_registration_number" placeholder="Enter your registration number" value="{{ request.form.university_registration_number or '' }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+            {% if message %}
+                <div class="alert alert-danger mt-3">
+                    {{ message }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center text-danger">Error {{ top }}</h2>
+        <div class="alert alert-danger">
+            <h4 class="alert-heading">Oops!</h4>
+            <p>{{ bottom }}</p>
+            <hr>
+            <p class="mb-0">Please try again or contact support if the problem persists.</p>
+        </div>
+        <div class="text-center">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+{% endblock %}
