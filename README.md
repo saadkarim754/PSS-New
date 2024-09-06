@@ -52,3 +52,11 @@ One of the challenges faced during development was ensuring the integrity and va
 - **ability to remove admins by having a super admin**
 
 This project has been a great learning experience, and I am proud of the features and functionality implemented. I look forward to further enhancing the application based on feedback and user needs.
+
+## changes to git
+- :the ssh keys are already set up
+- :use these three steps
+- :git init
+- :git add .
+- :git commit -m "your commit message"
+- :git push -u origin main
