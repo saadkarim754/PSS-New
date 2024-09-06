@@ -13,7 +13,7 @@
         <select id="sport_id" name="sport_id" class="form-control">
             <option value="">All Sports</option>
             {% for sport in sports %}
-                <option value="{{ sport.id }}">{{ sport.name }}</option>
+                   <option value="{{ sport.id }}">{{ sport.name }} ---- {{ sport.category }}</option>
             {% endfor %}
         </select>
     </div>
@@ -43,6 +43,6 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Download CSV</button>
+    <button type="submit" class="custom-primary">Download list</button>
 </form>
 {% endblock %}

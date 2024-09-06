@@ -3,12 +3,20 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+
+        <!-- Loading Animation -->
+    <div id="loading-animation" class="loading-animation">
+        <img src="{{ url_for('static', filename='images/batsman.png') }}" id="batsman" alt="Batsman" class="batsman">
+        <img src="{{ url_for('static', filename='images/ball.png') }}" id="ball" alt="Ball" class="ball">
+    </div>
+
     <div class="jumbotron text-center">
         <h2>Welcome to</h2>
         <h1>
             PIEAS SPORTICS SOCIETY
             {% if session.get("username") %}
-                {% if session.username == "LARAIB SHOAIB" %}
+                {% if session.username == "Laraib Shoaib" %}
                     <p class="text-red">Hello, {{ session.username }}! pookie dookie</p>
                 {% else %}
                     <p class="text-red">{{ session.username }}</p>
@@ -19,7 +27,7 @@
 
         {% if session.get("username") %}
             {% if is_admin and session.get("user_id") in is_admin %}
-                <a href="/create_event" class="btn btn-custom">Create Event</a>
+                <a href="/create_event" class="custom-secondary">Create Event</a>
                 <a href="/delete_event" class="btn btn-danger">Delete Event</a>
             {% endif %}
         {% endif %}
@@ -28,34 +36,40 @@
     <!-- President's Message Section -->
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="president-message-box d-flex align-items-center p-4">
-                    <img src="{{ url_for('static', filename='images/president.PNG') }}" alt="President Muhammad Tasdiq" class="president-image">
-                    <div class="message-content ml-4">
-                        <h2>President's Message</h2>
+            <div class="col-12 col-md-8">
+                <div class="president-message-box d-flex flex-column flex-md-row align-items-center p-4">
+                    <img src="{{ url_for('static', filename='images/president.PNG') }}" alt="President Muhammad Tasdiq" class="president-image mb-3 mb-md-0">
+                    <div class="message-content">
+                        <h2>Message from the President</h2>
                         <p><strong>MUHAMMAD TASDIQ</strong>, Batch 21-25</p>
-                        <p> Welcome to the PIEAS Sportics Society! </p>
-                        <p> As your president, I am thrilled to be a part of this vibrant community. Our goal is to promote sports and fitness among students and create an environment where everyone can thrive. I encourage you all to participate in our events and take full advantage of the opportunities we offer. Together, let's make this a memorable and exciting journey. </p>
+                        <p>
+                            Welcome to the PIEAS Sportics Society! As your president, I am thrilled to be a part of this vibrant community. Our goal is to promote sports and fitness among students and create an environment where everyone can thrive. I encourage you all to participate in our events and take full advantage of the opportunities we offer. Together, let's make this a memorable and exciting journey.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Objectives Section -->
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h2>Objectives</h2>
-                <p>
-                    Our primary goal is to promote sports and fitness among the students of PIEAS by organizing a variety of events and activities. We aim to foster a sense of community, encourage teamwork, and provide opportunities for students to engage in sports that they are passionate about. Through these events, we hope to enhance the overall student experience and contribute to a healthier and more active campus life.
-                </p>
+               <!-- Objectives Section -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="objectives-box p-4">
+                            <h2>Objectives</h2>
+                            <p>
+                                Our primary goal is to promote sports and fitness among the students of PIEAS by organizing a variety of events and activities. We aim to foster a sense of community, encourage teamwork, and provide opportunities for students to engage in sports that they are passionate about. Through these events, we hope to enhance the overall student experience and contribute to a healthier and more active campus life.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <!-- Events Section -->
-        <div class="row">
-            <div class="col-12">
+
+
+    <!-- Events Section -->
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
                 <h2>Upcoming Events</h2>
             </div>
             {% for event in events %}
@@ -67,42 +81,131 @@
                             <img src="{{ url_for('static', filename='images/default_event.jpg') }}" class="card-img-top" alt="Default Image">
                         {% endif %}
                         <div class="card-body">
-                            <h5 class="card-title">{{ event.name }}</h5>
-                            <p class="card-text">{{ event.date }}</p>
-                            <a href="/event/{{ event.id }}" class="btn btn-custom">See Event Details</a>
+                            <h5 class="card-title text-center">{{ event.name }}</h5>
+                            <p class="card-text text-center">{{ event.date }}</p>
+                            <a href="/event/{{ event.id }}" class="custom-secondary d-block text-center">See Event Details</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
+
+
+
+
+
+
     </div>
 
-    <!-- Inline CSS for President's Message -->
-    <style>
-        /* President's Message Box Styling */
+<!-- Inline CSS for President's Message -->
+<style>
+    /* President's Message Box Styling */
+    .president-message-box {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin-top: 20px;
+        overflow: hidden;
+        padding: 20px; /* Add padding to the box */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add shadow for better separation */
+    }
+
+    .president-image {
+        width: 150px; /* Adjust the size for better desktop appearance */
+        height: auto;
+        border-radius: 50%;
+        margin-right: 20px; /* Space between the image and text */
+    }
+
+    .message-content {
+        flex: 1; /* Allow text content to use the remaining space */
+        max-width: 600px; /* Limit maximum width */
+    }
+
+    .message-content h2 {
+        margin-bottom: 10px;
+        color: #343a40; /* Make the heading color match the theme */
+    }
+
+    .message-content p {
+        margin-bottom: 10px;
+        color: #6c757d; /* Provide a softer color for text */
+    }
+
+    /* Desktop Layout */
+    @media (min-width: 768px) {
         .president-message-box {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            margin-top: 20px;
+            display: flex;
+            flex-direction: row; /* Align items side-by-side on larger screens */
+            align-items: center;
         }
 
         .president-image {
-            width: 120px;
-            height: auto;
-            border-radius: 50%;
+            width: 100px; /* size for desktop */
+            margin-right: 20px; /* Space between image and text */
+        }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 767px) {
+        .president-message-box {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .president-image {
+            width: 120px; /* Smaller size for mobile */
+            margin-bottom: 15px; /* Space below the image */
         }
 
         .message-content {
-            max-width: 600px;
+            max-width: 100%; /* Full width on mobile */
+        }
+    }
+
+    /* Loading Animation Styling */
+        .loading-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .message-content h2 {
-            margin-bottom: 10px;
+        .batsman {
+            position: absolute;
+            left: 35%;
+            width: 100px;
         }
 
-        .message-content p {
-            margin-bottom: 10px;
+        .ball {
+            position: absolute;
+            left: 45%;
+            width: 50px;
+            animation: moveBall 6s linear infinite;
         }
-    </style>
+
+        @keyframes moveBall {
+            0% {
+                left: 35%;
+            }
+            100% {
+                left: 90%;
+            }
+        }
+
+</style>
+
+ <script>
+        window.addEventListener('load', function() {
+            document.getElementById('loading-animation').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        });
+ </script>
+
 {% endblock %}

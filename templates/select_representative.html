@@ -3,6 +3,21 @@
 {% block title %}Select Departmental Representative{% endblock %}
 
 {% block content %}
+<style>
+            /* Mobile Styling */
+        @media (max-width: 767px) {
+            .table-heading {
+                font-size: 12px;
+                text-align: center;
+                padding: 5px;
+            }
+            .table th,
+            .table td {
+                padding: 8px 4px;
+            }
+        }
+
+</style>
 <div class="container mt-5">
 
     <h1>APPLICANTS</h1>
@@ -26,7 +41,7 @@
                     <td>
                         <form action="{{ url_for('select_representative') }}" method="post" style="display:inline;">
                             <input type="hidden" name="user_id" value="{{ applicant.user_id }}">
-                            <button type="submit" class="btn btn-primary">Select</button>
+                            <button type="submit" class="custom-primary">Select</button>
                         </form>
                     </td>
                 </tr>

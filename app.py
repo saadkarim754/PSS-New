@@ -7,7 +7,7 @@ from flask import Flask, flash, redirect, render_template, request, session, sen
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required, usd
 
 
 
@@ -91,7 +91,7 @@ def admin_required(f):
         user_id = session.get("user_id")
         user = db.execute("SELECT * FROM admins WHERE user_id = ?", (user_id,))
         if not user:
-            flash("You need to be an admin to access this page.")
+            flash("oh, seems like you're not an admin, soooory 😢","danger")
             return redirect(url_for("index"))  # Redirect to a safe page if not an admin
         return f(*args, **kwargs)
     return decorated_function
@@ -104,6 +104,7 @@ def admin_required(f):
 
 
 @app.route("/admins")
+@admin_required
 @login_required
 def admins():
     """Show list of current admins and allow adding new admins"""
@@ -316,7 +317,7 @@ def create_event():
         # Insert event into the database
         db.execute("INSERT INTO events (name, description, start_date, end_date, image) VALUES (?, ?, ?, ?, ?)",
                    name, description, start_date, end_date, filename)
-        flash("Event created!")
+        flash("Event created!","success")
         return redirect("/")
     # GET request renders the event creation form
     return render_template("create_event.html")
@@ -339,7 +340,7 @@ def delete_event():
         db.execute("DELETE FROM registrations WHERE event_id = ?", event_id)
         # Delete the event
         db.execute("DELETE FROM events WHERE id = ?", event_id)
-        flash("Event deleted!")
+        flash("Event deleted!","danger")
         return redirect("/")
     # GET request renders the event deletion form
     events = db.execute("SELECT id, name FROM events")
@@ -413,6 +414,7 @@ def download_filtered_csv():
     sport_id = request.form.get('sport_id')
     department = request.form.get('department')
     gender = request.form.get('gender')
+    event_id = request.form.get('event_id')
 
     # Construct SQL query based on the filters
     query = """
@@ -429,9 +431,9 @@ def download_filtered_csv():
     JOIN registrations ON users.id = registrations.user_id
     JOIN sports ON registrations.sport_id = sports.id
     JOIN events ON registrations.event_id = events.id
-    WHERE 1=1
+    WHERE registrations.event_id = ?
     """
-    params = []
+    params = [event_id]
     if sport_id:
         query += " AND registrations.sport_id = ?"
         params.append(sport_id)
@@ -449,12 +451,12 @@ def download_filtered_csv():
     output = StringIO()
     writer = csv.writer(output)
     writer.writerow([
-        'User ID', 'Username', 'Email', 'Phone Number',
+        'Serial Number', 'Username', 'Email', 'Phone Number',
         'Department', 'Gender', 'Sport Name', 'Event Name'
     ])
-    for user in users:
+    for index, user in enumerate(users, start=1):
         writer.writerow([
-            user['user_id'],
+            index,  # Serial Number
             user['username'],
             user['email'],
             user['phone_number'],
@@ -463,15 +465,22 @@ def download_filtered_csv():
             user['sport_name'],
             user['event_name']
         ])
-
     output.seek(0)
 
     # Convert StringIO to BytesIO
     byte_output = BytesIO(output.getvalue().encode('utf-8'))
     output.close()
 
-    # Construct the filename based on filters
-    filename_parts = []
+     # Query to get the event name using the event_id
+    event_name = db.execute("SELECT name FROM events WHERE id = ?", event_id)
+    if event_name:
+        event_name = event_name[0]['name']
+    else:
+        event_name = "Unknown_Event"
+
+    # Construct the filename parts
+    filename_parts = [f"Event_{event_name}"]  # Add event_name to the filename
+
     if sport_id:
         sport_name = db.execute("SELECT name FROM sports WHERE id = ?", sport_id)
         if sport_name:
@@ -498,8 +507,16 @@ def download_filtered_csv():
 @app.route('/register_event/<int:event_id>', methods=['GET', 'POST'])
 @login_required
 def register_event(event_id):
+    user_id = session['user_id']
+
+    # Fetch user details to determine gender
+    user = db.execute("SELECT * FROM users WHERE id = ?", user_id)
+    if len(user) != 1:
+        return apology("User not found", 404)
+    user = user[0]
+    gender = user['gender']
+
     if request.method == 'POST':
-        user_id = session['user_id']
         sports_ids = request.form.getlist('sports')  # List of selected sports IDs
 
         # Register user for the event and selected sports
@@ -516,24 +533,24 @@ def register_event(event_id):
         placeholders = ', '.join(['?'] * len(sports_ids))  # Create placeholders for SQL IN clause
         sports = db.execute(f"SELECT name FROM sports WHERE id IN ({placeholders})", *sports_ids)
 
-        # Fetch user's name
-        user = db.execute("SELECT username FROM users WHERE id = ?", user_id)
-        if len(user) != 1:
-            return apology("User not found", 404)
-        user = user[0]
-
         # Create flash message
         sport_names = ", ".join(sport['name'] for sport in sports)
-        flash(f'{user["username"]} has registered for {event["name"]} with sports: {sport_names}')
+        flash(f'{user["username"]} ,, oh my,, u have registered for {event["name"]} with sports: {sport_names}',"success")
         return redirect('/')
 
     # GET request: Show form to register for events
     event = db.execute("SELECT * FROM events WHERE id = ?", event_id)
-    sports = db.execute("SELECT * FROM sports")
+
+    # Fetch sports based on user gender
+    if gender == 'Male':
+        sports = db.execute("SELECT * FROM sports WHERE category IN ('Male Departmental', 'Athletics', 'Mini Games', 'e-sports')")
+    else:
+        sports = db.execute("SELECT * FROM sports WHERE category IN ('Female Departmental', 'Mini Games', 'e-sports')")
+
     if len(event) != 1:
         return apology("Event not found", 404)
     event = event[0]
-    return render_template('register_event.html', event=event, sports=sports)
+    return render_template('register_event.html', event=event, sports=sports, user=user)
 
 
 

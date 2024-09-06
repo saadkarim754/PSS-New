@@ -3,10 +3,10 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card p-4" style="max-width: 450px; width: 100%; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
             <div class="text-center">
-                <img src="{{ url_for('static', filename='images/sportics.jpg') }}" alt="Sportics Logo" class="mb-4" style="max-width: 100px;">
+                <img src="{{ url_for('static', filename='images/sportics_rmb.webp') }}" alt="Sportics Logo" class="mb-4" style="max-width: 100px;">
                 <h2 class="h4 mb-4">Sign in</h2>
             </div>
             <form action="/login" method="post">
@@ -18,7 +18,10 @@
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Next</button>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <button type="submit" class="custom-primary">Next</button>
+                </div>
+
             </form>
             {% if message %}
                 <div class="alert alert-danger mt-3">

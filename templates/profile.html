@@ -46,9 +46,14 @@
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <input type="text" class="form-control" id="gender" name="gender" value="{{ user.gender }}" required>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Profile</button>
+
+                <button type="submit" class="custom-primary">Update Profile</button>
             </form>
         </div>
 
